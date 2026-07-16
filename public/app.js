@@ -365,11 +365,11 @@ function refreshLists() {
 
 elements.availableSearch.addEventListener(
   "input",
-  debounce(() => availableList.reset(elements.availableSearch.value), 260),
+  debounce(() => availableList.reset(elements.availableSearch.value), 100),
 );
 elements.selectedSearch.addEventListener(
   "input",
-  debounce(() => selectedList.reset(elements.selectedSearch.value), 260),
+  debounce(() => selectedList.reset(elements.selectedSearch.value), 100),
 );
 
 elements.addForm.addEventListener("submit", (event) => {
@@ -484,7 +484,7 @@ window.addEventListener("pagehide", () => {
   addQueue.flushWithBeacon();
 });
 
-setInterval(updateQueueStatus, 1_000);
+setInterval(updateQueueStatus, 250);
 refreshLists();
 updateQueueStatus();
 

@@ -23,7 +23,7 @@ async function postJson(endpoint, body) {
 }
 
 export class BatchedReadQueue {
-  constructor({ interval = 1_000, onChange = () => {} } = {}) {
+  constructor({ interval = 150, onChange = () => {} } = {}) {
     this.pending = new Map();
     this.inFlight = new Map();
     this.sending = false;
@@ -94,7 +94,7 @@ export class BatchedReadQueue {
 
 export class DeduplicatedMutationQueue {
   constructor({
-    interval = 1_000,
+    interval = 150,
     onChange = () => {},
     onSuccess = () => {},
     onError = () => {},
