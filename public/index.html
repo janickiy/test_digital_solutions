@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Выбор и сортировка элементов из списка на миллион записей"
+    />
+    <title>Million Select</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div>
+          <div class="eyebrow"><span></span> Управление коллекцией</div>
+          <h1>Миллион элементов.<br /><em>Только нужные.</em></h1>
+          <p class="hero-copy">
+            Ищите, выбирайте и задавайте порядок — сервер сохранит общее
+            состояние до перезапуска приложения.
+          </p>
+        </div>
+
+        <div class="stats-card" aria-label="Статистика списка">
+          <div class="stat-main">
+            <span id="total-count">1 000 000</span>
+            <small>всего элементов</small>
+          </div>
+          <div class="stat-row">
+            <div><strong id="available-count">—</strong><span>доступно</span></div>
+            <div><strong id="selected-count">—</strong><span>выбрано</span></div>
+            <div><strong id="custom-count">0</strong><span>добавлено</span></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="queue-strip" aria-label="Состояние очередей">
+        <span class="queue-title">Очереди запросов</span>
+        <span class="queue-chip" id="read-queue-status">
+          <i></i> Чтение · пусто
+        </span>
+        <span class="queue-chip" id="mutation-queue-status">
+          <i></i> Изменения · пусто
+        </span>
+        <span class="queue-chip" id="add-queue-status">
+          <i></i> Добавление · пусто
+        </span>
+        <span class="queue-note">дубликаты объединяются автоматически</span>
+      </section>
+
+      <main class="workspace">
+        <section class="panel panel-available" aria-labelledby="available-heading">
+          <div class="panel-head">
+            <div class="panel-title">
+              <span class="step-number">01</span>
+              <div>
+                <h2 id="available-heading">Все элементы</h2>
+                <p>Кроме уже выбранных</p>
+              </div>
+            </div>
+            <span class="panel-badge" id="available-badge">доступные</span>
+          </div>
+
+          <label class="search-field">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
+            </svg>
+            <input
+              id="available-search"
+              type="search"
+              placeholder="Найти по ID"
+              autocomplete="off"
+            />
+            <kbd>/</kbd>
+          </label>
+
+          <div class="list-scroll" id="available-scroll" tabindex="0">
+            <div class="list-rows" id="available-rows"></div>
+            <div class="list-footer" id="available-footer"></div>
+          </div>
+
+          <form class="add-form" id="add-form">
+            <div>
+              <label for="new-id">Добавить свой ID</label>
+              <span>Отправка пакетом каждые 10 секунд</span>
+            </div>
+            <div class="add-controls">
+              <input
+                id="new-id"
+                maxlength="128"
+                placeholder="Например, custom-42"
+                required
+              />
+              <button type="submit" class="button button-dark">
+                <span>В очередь</span><b aria-hidden="true">＋</b>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel panel-selected" aria-labelledby="selected-heading">
+          <div class="panel-head">
+            <div class="panel-title">
+              <span class="step-number">02</span>
+              <div>
+                <h2 id="selected-heading">Выбранные</h2>
+                <p>Перетащите, чтобы изменить порядок</p>
+              </div>
+            </div>
+            <span class="panel-badge panel-badge-accent" id="selected-badge">0 выбрано</span>
+          </div>
+
+          <label class="search-field">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" />
+            </svg>
+            <input
+              id="selected-search"
+              type="search"
+              placeholder="Фильтр выбранных по ID"
+              autocomplete="off"
+            />
+            <span class="search-hint">20 / batch</span>
+          </label>
+
+          <div class="sort-note">
+            <span class="drag-symbol">⠿</span>
+            Сортировка применяется и к отфильтрованному списку
+          </div>
+
+          <div class="list-scroll selected-scroll" id="selected-scroll" tabindex="0">
+            <div class="list-rows" id="selected-rows"></div>
+            <div class="list-footer" id="selected-footer"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="page-footer">
+        <span>Express.js · память процесса</span>
+        <span>Порция: 20 элементов</span>
+        <span id="state-version">Версия состояния: 0</span>
+      </footer>
+    </div>
+
+    <div class="toast-region" id="toast-region" aria-live="polite"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

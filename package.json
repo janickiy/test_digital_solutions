@@ -1,0 +1,19 @@
+{
+  "name": "million-item-selector",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Million-item selector with batched request queues and server-side ordering",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test",
+    "check": "node --check src/server.js && node --check src/store.js && node --check public/app.js && node --check public/queues.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
